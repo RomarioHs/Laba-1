@@ -1,6 +1,8 @@
 import json
 from datetime import datetime, date
 import inspect
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
 from user import User
 from message import Message
 from chat import Chat
@@ -72,7 +74,7 @@ class Admin:
             data.append(item)
 
         with open(self.json_path, "w", encoding="utf-8") as f:
-            json.dump(data, f)
+            json.dump(data, f, indent=4)
 
     def load_json(self):
         print("[LOAD] JSON")
@@ -90,7 +92,6 @@ class Admin:
                 if key not in sig.parameters:
                     continue
 
-                # восстановление дат
                 if isinstance(value, str):
                     try:
                         if len(value) >= 10 and value[4] == "-" and value[7] == "-":
@@ -102,7 +103,6 @@ class Admin:
 
             obj = cls(**args)
 
-            # восстанавливаем остальные атрибуты
             for k, v in data.items():
                 setattr(obj, k, v)
 
@@ -115,6 +115,99 @@ class Admin:
             if class_name in self.class_map:
                 cls = self.class_map[class_name]
                 obj = decode(cls, data)
+                result.append(obj)
+
+        return result
+
+    def save_xml(self):
+        print("[SAVE] XML")
+        root = ET.Element("root")
+
+        def build_xml(parent, obj):
+            for key, value in obj.__dict__.items():
+
+                if isinstance(value, (datetime, date)):
+                    ET.SubElement(parent, key).text = value.isoformat()
+
+                elif hasattr(value, "__dict__"):
+                    elem = ET.SubElement(parent, key, attrib={"type": value.__class__.__name__})
+                    build_xml(elem, value)
+
+                elif isinstance(value, list):
+                    arr = ET.SubElement(parent, key)
+                    for item in value:
+                        if hasattr(item, "__dict__"):
+                            elem = ET.SubElement(arr, "item", attrib={"type": item.__class__.__name__})
+                            build_xml(elem, item)
+                        else:
+                            ET.SubElement(arr, "item").text = str(item)
+
+                else:
+                    ET.SubElement(parent, key).text = str(value)
+
+        for obj in self.data:
+            elem = ET.SubElement(root, obj.__class__.__name__)
+            build_xml(elem, obj)
+
+        rough_string = ET.tostring(root, "utf-8")
+        reparsed = minidom.parseString(rough_string)
+        root = reparsed.toprettyxml(indent="    ")
+
+        with open(self.xml_path, "w", encoding="utf-8") as f:
+            f.write(root)
+
+
+    def load_xml(self):
+        print("LOAD XML")
+        tree = ET.parse(self.xml_path)
+        root = tree.getroot()
+        result = []
+
+        def parse_obj(elem):
+            class_name = elem.tag
+            cls = self.class_map.get(class_name)
+            if not cls:
+                return None
+
+            kwargs = {}
+            extra = {}
+
+            for child in elem:
+                if list(child):
+                    arr = []
+                    for item in child:
+                        if "type" in item.attrib:
+                            arr.append(parse_obj(item))
+                        else:
+                            arr.append(item.text)
+                    extra[child.tag] = arr
+
+
+                elif "type" in child.attrib:
+                    extra[child.tag] = parse_obj(child)
+
+
+                else:
+                    text = child.text
+                    # даты
+                    try:
+                        text = datetime.fromisoformat(text)
+                    except:
+                        pass
+
+                    kwargs[child.tag] = text
+
+            obj = cls(**{k: v for k, v in kwargs.items()
+                         if k in inspect.signature(cls.__init__).parameters})
+
+            for k, v in extra.items():
+                setattr(obj, k, v)
+
+            return obj
+
+        for elem in root:
+            obj = parse_obj(elem)
+            if obj:
                 result.append(obj)
 
         return result
