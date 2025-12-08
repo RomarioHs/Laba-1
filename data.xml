@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+<root>
+    <User>
+        <id>74202e9e-d39f-11f0-925e-e0c264c06b11</id>
+        <date_create>2025-12-07</date_create>
+        <username>Semen</username>
+        <phone>1234567890</phone>
+        <mail>bublic@gmail.com</mail>
+    </User>
+    <User>
+        <id>74207cd4-d39f-11f0-b52b-e0c264c06b11</id>
+        <date_create>2025-12-07</date_create>
+        <username>Roman</username>
+        <phone>987654321</phone>
+        <mail>cucumber@mail.com</mail>
+    </User>
+    <User>
+        <id>74207cd5-d39f-11f0-b417-e0c264c06b11</id>
+        <date_create>2025-12-07</date_create>
+        <username>Artem</username>
+        <phone>88005553535</phone>
+        <mail>Artem228@mail.com</mail>
+    </User>
+    <Chat>
+        <id>74207cd6-d39f-11f0-bc77-e0c264c06b11</id>
+        <name>Work Chat</name>
+        <members>
+            <item type="User">
+                <id>74202e9e-d39f-11f0-925e-e0c264c06b11</id>
+                <date_create>2025-12-07</date_create>
+                <username>Semen</username>
+                <phone>1234567890</phone>
+                <mail>bublic@gmail.com</mail>
+            </item>
+            <item type="User">
+                <id>74207cd4-d39f-11f0-b52b-e0c264c06b11</id>
+                <date_create>2025-12-07</date_create>
+                <username>Roman</username>
+                <phone>987654321</phone>
+                <mail>cucumber@mail.com</mail>
+            </item>
+            <item type="User">
+                <id>74207cd5-d39f-11f0-b417-e0c264c06b11</id>
+                <date_create>2025-12-07</date_create>
+                <username>Artem</username>
+                <phone>88005553535</phone>
+                <mail>Artem228@mail.com</mail>
+            </item>
+        </members>
+        <messages>
+            <item type="Message">
+                <id>74207cd7-d39f-11f0-8ac1-e0c264c06b11</id>
+                <sender type="User">
+                    <id>74202e9e-d39f-11f0-925e-e0c264c06b11</id>
+                    <date_create>2025-12-07</date_create>
+                    <username>Semen</username>
+                    <phone>1234567890</phone>
+                    <mail>bublic@gmail.com</mail>
+                </sender>
+                <text>Привет, коллеги! Мы с вами находимся в лучшем мессенджере, его ловит даже на парковке!</text>
+                <attachment>None</attachment>
+                <timestamp>2025-12-07T22:03:45.003234</timestamp>
+            </item>
+            <item type="Message">
+                <id>74207cd8-d39f-11f0-a380-e0c264c06b11</id>
+                <sender type="User">
+                    <id>74207cd4-d39f-11f0-b52b-e0c264c06b11</id>
+                    <date_create>2025-12-07</date_create>
+                    <username>Roman</username>
+                    <phone>987654321</phone>
+                    <mail>cucumber@mail.com</mail>
+                </sender>
+                <text>Привет! Я очень рад.</text>
+                <attachment>None</attachment>
+                <timestamp>2025-12-07T22:03:45.003234</timestamp>
+            </item>
+            <item type="Message">
+                <id>74207cd9-d39f-11f0-af3b-e0c264c06b11</id>
+                <sender type="User">
+                    <id>74207cd5-d39f-11f0-b417-e0c264c06b11</id>
+                    <date_create>2025-12-07</date_create>
+                    <username>Artem</username>
+                    <phone>88005553535</phone>
+                    <mail>Artem228@mail.com</mail>
+                </sender>
+                <text>Я отправила файл</text>
+                <attachment type="Attachment">
+                    <file_name>report.pdf</file_name>
+                    <file_size>1024</file_size>
+                </attachment>
+                <timestamp>2025-12-07T22:03:45.003234</timestamp>
+            </item>
+        </messages>
+    </Chat>
+    <ContactList>
+        <owner type="User">
+            <id>74202e9e-d39f-11f0-925e-e0c264c06b11</id>
+            <date_create>2025-12-07</date_create>
+            <username>Semen</username>
+            <phone>1234567890</phone>
+            <mail>bublic@gmail.com</mail>
+        </owner>
+        <contacts>
+            <item type="User">
+                <id>74207cd4-d39f-11f0-b52b-e0c264c06b11</id>
+                <date_create>2025-12-07</date_create>
+                <username>Roman</username>
+                <phone>987654321</phone>
+                <mail>cucumber@mail.com</mail>
+            </item>
+            <item type="User">
+                <id>74207cd5-d39f-11f0-b417-e0c264c06b11</id>
+                <date_create>2025-12-07</date_create>
+                <username>Artem</username>
+                <phone>88005553535</phone>
+                <mail>Artem228@mail.com</mail>
+            </item>
+        </contacts>
+    </ContactList>
+</root>
