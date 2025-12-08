@@ -189,7 +189,6 @@ class Admin:
 
                 else:
                     text = child.text
-                    # даты
                     try:
                         text = datetime.fromisoformat(text)
                     except:
