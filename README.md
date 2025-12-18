@@ -1,2 +1,2 @@
 # Laba 1
-!['UML'](UML.png)
+!['UML'](UML1.png)
