@@ -1,6 +1,8 @@
 from uuid import uuid1
 from datetime import date
 
+class InvalidUserDataError(Exception):
+    pass
 class User:
 
     def __init__(self,
@@ -12,7 +14,11 @@ class User:
         self.username = username
         self.phone = phone
         self.mail = mail
+        if username and len(username) < 3:
+            raise InvalidUserDataError(f"Имя пользователя '{username}' слишком короткое (минимум 3 символа)")
 
+        if mail and "@" not in mail:
+            raise InvalidUserDataError(f"Email '{mail}' должен содержать @")
 
     def update(self,
                username: str = None,
@@ -23,6 +29,7 @@ class User:
             updated = False
 
             if username is not None:
+
                 self.username = username
                 updated = True
 
